@@ -19,9 +19,27 @@ function sayHi(){
   str = "Hi world";
   console.log(str);
 }
-sayHi();h
+sayHi();
 ```
 上面的代码中，str是在脚本中定义的一个全局变量，在脚本运行期间，任何函数和代码都有权对其访问和修改，执行sayHello()
 函数会输出原始的Hello world,但是str变量随后就被修改，其指向的字符串被修改为Hi world,因此执行完sayHi()函数后str变
 量就被修改了。所以一般js进阶的书都会告诉开发者尽量少定义全局变量，因为它可以被任意修改，使得你难以跟踪到变量的值
 在中间的变化过程，使得Bug难以被察觉。
+
+然后理解函数作用域。js里的函数非常灵活和强大，是js里的一等公民。函数作用域是指在js在调用函数时会为其创建一个独立
+于全局作用域的空间，而在函数内部通过var关键字定义的变量仅仅对函数内部是可见的，外部代码无权访问函数内部定义的变量。
+举个栗子
+
+```javascript
+var name = "Jack";
+function sayName(){
+  var name = "Ricky";
+  console.log(name);
+}
+sayName();
+console.log(name);
+```
+上面的代码应该依次输出Ricky和Jack，原因是在函数sayName里定义的变量name仅仅对函数内部可见，对外部代码是不可见的。当
+sayName函数被调用时，输出的应该是在函数内部定义的name(这个和作用域链有关，作用域和作用域链不是同一个概念)。而
+console.log(name)语句输出的应该是在全局函数内定义的变量name="Jack"。而每次调用函数sayName，js解释器都会创建一个独立
+于全局作用域的函数作用域，该作用域仅对函数内部可见，随着函数的调用结束
